@@ -29,21 +29,26 @@
         private void InitializeComponent()
         {
             roadPanel = new Panel();
+            enemyCar3 = new PictureBox();
+            enemyCar2 = new PictureBox();
             enemyCar = new PictureBox();
             playerCar = new PictureBox();
             btnRestart = new Button();
-            
+            lblScore = new Label();
+            btnPause = new Button();
             roadPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)enemyCar3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)enemyCar2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)enemyCar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerCar).BeginInit();
-            
             SuspendLayout();
             // 
             // roadPanel
             // 
             roadPanel.BackColor = Color.DimGray;
             roadPanel.BorderStyle = BorderStyle.FixedSingle;
-           
+            roadPanel.Controls.Add(enemyCar3);
+            roadPanel.Controls.Add(enemyCar2);
             roadPanel.Controls.Add(enemyCar);
             roadPanel.Controls.Add(playerCar);
             roadPanel.Location = new Point(90, 20);
@@ -51,6 +56,24 @@
             roadPanel.Size = new Size(300, 650);
             roadPanel.TabIndex = 0;
             roadPanel.Paint += roadPanel_Paint;
+            // 
+            // enemyCar3
+            // 
+            enemyCar3.BackColor = Color.Green;
+            enemyCar3.Location = new Point(30, -150);
+            enemyCar3.Name = "enemyCar3";
+            enemyCar3.Size = new Size(40, 70);
+            enemyCar3.TabIndex = 3;
+            enemyCar3.TabStop = false;
+            // 
+            // enemyCar2
+            // 
+            enemyCar2.BackColor = Color.Blue;
+            enemyCar2.Location = new Point(230, 20);
+            enemyCar2.Name = "enemyCar2";
+            enemyCar2.Size = new Size(40, 70);
+            enemyCar2.TabIndex = 2;
+            enemyCar2.TabStop = false;
             // 
             // enemyCar
             // 
@@ -76,20 +99,43 @@
             // 
             btnRestart.BackColor = Color.LightGreen;
             btnRestart.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRestart.Location = new Point(190, 690);
+            btnRestart.Location = new Point(90, 676);
             btnRestart.Name = "btnRestart";
-            btnRestart.Size = new Size(100, 40);
+            btnRestart.Size = new Size(106, 40);
             btnRestart.TabIndex = 1;
             btnRestart.Text = "RESTART";
             btnRestart.UseVisualStyleBackColor = false;
             btnRestart.Click += btnRestart_Click;
-            
+            // 
+            // lblScore
+            // 
+            lblScore.AutoSize = true;
+            lblScore.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScore.Location = new Point(396, 41);
+            lblScore.Name = "lblScore";
+            lblScore.Size = new Size(112, 32);
+            lblScore.TabIndex = 2;
+            lblScore.Text = "Score : 0";
+            // 
+            // btnPause
+            // 
+            btnPause.BackColor = Color.Cyan;
+            btnPause.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPause.Location = new Point(202, 678);
+            btnPause.Name = "btnPause";
+            btnPause.Size = new Size(106, 40);
+            btnPause.TabIndex = 3;
+            btnPause.Text = "PAUSE";
+            btnPause.UseVisualStyleBackColor = false;
+            btnPause.Click += btnPause_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(478, 794);
+            ClientSize = new Size(578, 794);
+            Controls.Add(btnPause);
+            Controls.Add(lblScore);
             Controls.Add(btnRestart);
             Controls.Add(roadPanel);
             KeyPreview = true;
@@ -98,10 +144,12 @@
             Text = "Car Racing Game";
             KeyDown += Form1_KeyDown;
             roadPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)enemyCar3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)enemyCar2).EndInit();
             ((System.ComponentModel.ISupportInitialize)enemyCar).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerCar).EndInit();
-            
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -110,6 +158,9 @@
         private PictureBox playerCar;
         private PictureBox enemyCar;
         private Button btnRestart;
-       
+        private PictureBox enemyCar2;
+        private Label lblScore;
+        private PictureBox enemyCar3;
+        private Button btnPause;
     }
 }

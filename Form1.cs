@@ -7,16 +7,27 @@ namespace WinFormsApp1
     public partial class Form1 : Form
     {
         private System.Windows.Forms.Timer gameTimer;
-
+        int score = 0;
+        int roadLinePosition = 0;
+        System.Windows.Forms.Timer roadTimer;
         public Form1()
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+              ControlStyles.AllPaintingInWmPaint |
+              ControlStyles.UserPaint, true);
+            typeof(Panel).InvokeMember("DoubleBuffered",
+            System.Reflection.BindingFlags.SetProperty |
+    System.Reflection.BindingFlags.Instance |
+    System.Reflection.BindingFlags.NonPublic,
+    null, roadPanel, new object[] { true });
 
             this.KeyPreview = true;
 
             gameTimer = new System.Windows.Forms.Timer();
 
-            gameTimer.Interval = 50;
+
+            gameTimer.Interval = 20;
 
             gameTimer.Tick += GameTimer_Tick;
 
@@ -26,7 +37,15 @@ namespace WinFormsApp1
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             enemyCar.Top += 5;
-            
+
+            enemyCar2.Top += 7;
+
+            enemyCar3.Top += 6;
+
+            roadLinePosition += 2;
+
+            roadPanel.Invalidate();
+
 
             // Collision with first enemy
             if (playerCar.Bounds.IntersectsWith(enemyCar.Bounds))
@@ -39,29 +58,63 @@ namespace WinFormsApp1
             }
 
             // Collision with second enemy
-           
+            if (playerCar.Bounds.IntersectsWith(enemyCar2.Bounds))
+            {
+                gameTimer.Stop();
+                MessageBox.Show("GAME OVER! You crashed.");
+                return;
+            }
+            // Collision with second enemy
+            if (playerCar.Bounds.IntersectsWith(enemyCar3.Bounds))
+            {
+                gameTimer.Stop();
+                MessageBox.Show("GAME OVER! You crashed.");
+                return;
+            }
+
+
 
             // Reset first enemy
             if (enemyCar.Top > roadPanel.Height)
             {
                 enemyCar.Top = -enemyCar.Height;
+                score += 10;
+                lblScore.Text = "Score: " + score;
+            }
+            //reset second enemy
+            if (enemyCar2.Top > roadPanel.Height)
+            {
+                enemyCar2.Top = -200;
+                score += 10;
+                lblScore.Text = "Score: " + score;
+            }
+            //reset third enemy
+            if (enemyCar3.Top > roadPanel.Height)
+            {
+                enemyCar3.Top = -300;
+
+                score += 10;
+                lblScore.Text = "Score: " + score;
             }
 
-            // Reset second enemy
-           
         }
 
         private void roadPanel_Paint(object sender, PaintEventArgs e)
         {
-            Pen roadLine = new Pen(Color.White, 5);
+            using (Pen roadLine = new Pen(Color.White, 5))
+            {
+                int dashHeight = 40;
+                int gap = 30;
 
-            roadLine.DashStyle = DashStyle.Dash;
+                int offset = roadLinePosition % (dashHeight + gap);
 
-            e.Graphics.DrawLine(roadLine, 100, 0, 100, 650);
+                for (int y = offset - 70; y < roadPanel.Height; y += 70)
+                {
+                    e.Graphics.DrawLine(roadLine, 100, y, 100, y + dashHeight);
 
-            e.Graphics.DrawLine(roadLine, 200, 0, 200, 650);
-
-            roadLine.Dispose();
+                    e.Graphics.DrawLine(roadLine, 200, y, 200, y + dashHeight);
+                }
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -78,6 +131,18 @@ namespace WinFormsApp1
                     playerCar.Left -= 20;
                 }
 
+                return true;
+            }
+            if (keyData == Keys.Up)
+            {
+                if (playerCar.Top - 20 >= 5)
+                    playerCar.Top -= 20;
+                return true;
+            }
+            if (keyData == Keys.Down)
+            {
+                if (playerCar.Bottom + 20 <= roadPanel.ClientSize.Height - 5)
+                    playerCar.Top += 20;
                 return true;
             }
 
@@ -97,15 +162,32 @@ namespace WinFormsApp1
         private void btnRestart_Click(object sender, EventArgs e)
         {
             enemyCar.Top = 20;
+            enemyCar2.Top = 200;
+            enemyCar3.Top = -150;
 
-           
 
             playerCar.Left = 130;
+            score = 0;
+            lblScore.Text = "Score: 0";
 
             gameTimer.Start();
 
             this.Focus();
         }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (gameTimer.Enabled)
+            {
+                gameTimer.Stop();
+                btnPause.Text = "RESUME";
+            }
+            else
+            {
+                gameTimer.Start();
+                btnPause.Text = "PAUSE";
+            }
+        }
+    
     }
 }
-
