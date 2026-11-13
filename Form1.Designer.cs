@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             roadPanel = new Panel();
             enemyCar3 = new PictureBox();
             enemyCar2 = new PictureBox();
@@ -59,41 +60,48 @@
             // 
             // enemyCar3
             // 
-            enemyCar3.BackColor = Color.Green;
-            enemyCar3.Location = new Point(30, -150);
+            enemyCar3.BackColor = Color.Transparent;
+            enemyCar3.Image = (Image)resources.GetObject("enemyCar3.Image");
+            enemyCar3.Location = new Point(1, -150);
             enemyCar3.Name = "enemyCar3";
-            enemyCar3.Size = new Size(40, 70);
+            enemyCar3.Size = new Size(80, 110);
+            enemyCar3.SizeMode = PictureBoxSizeMode.StretchImage;
             enemyCar3.TabIndex = 3;
             enemyCar3.TabStop = false;
             // 
             // enemyCar2
             // 
-            enemyCar2.BackColor = Color.Blue;
-            enemyCar2.Location = new Point(230, 20);
+            enemyCar2.BackColor = Color.Transparent;
+            enemyCar2.Image = (Image)resources.GetObject("enemyCar2.Image");
+            enemyCar2.Location = new Point(219, -1);
             enemyCar2.Name = "enemyCar2";
-            enemyCar2.Size = new Size(40, 70);
+            enemyCar2.Size = new Size(80, 110);
+            enemyCar2.SizeMode = PictureBoxSizeMode.StretchImage;
             enemyCar2.TabIndex = 2;
             enemyCar2.TabStop = false;
             // 
             // enemyCar
             // 
-            enemyCar.BackColor = Color.Blue;
-            enemyCar.Location = new Point(130, 20);
+            enemyCar.BackColor = Color.Transparent;
+            enemyCar.Image = (Image)resources.GetObject("enemyCar.Image");
+            enemyCar.Location = new Point(111, -1);
             enemyCar.Name = "enemyCar";
-            enemyCar.Size = new Size(40, 70);
+            enemyCar.Size = new Size(80, 110);
             enemyCar.SizeMode = PictureBoxSizeMode.StretchImage;
             enemyCar.TabIndex = 1;
             enemyCar.TabStop = false;
             // 
             // playerCar
             // 
-            playerCar.BackColor = Color.Red;
-            playerCar.Location = new Point(130, 560);
+            playerCar.BackColor = Color.Transparent;
+            playerCar.Image = CarRacingGame.Properties.Resources.Audi_removebg_preview;
+            playerCar.Location = new Point(111, 539);
             playerCar.Name = "playerCar";
-            playerCar.Size = new Size(40, 70);
+            playerCar.Size = new Size(80, 110);
             playerCar.SizeMode = PictureBoxSizeMode.StretchImage;
             playerCar.TabIndex = 0;
             playerCar.TabStop = false;
+            playerCar.Click += playerCar_Click;
             // 
             // btnRestart
             // 
